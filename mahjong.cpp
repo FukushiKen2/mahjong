@@ -15,7 +15,7 @@ int main(){
   cin >> a >> b >> c >> d;
 
   cout << "着順を入力してください" << endl;
-  string p1,p2,p3,p4;
+  int p1,p2,p3,p4;
   cout << a << " ";
   cin >> p1;
   cout << b << " ";
@@ -41,6 +41,10 @@ int main(){
   int nma,nmb,nmc,nmd;
   int suma, sumb, sumc, sumd;
   double moa,mob,moc,mod;
+  double ra=1500;
+  double rb=1500;
+  double rc=1500;
+  double rd=1500;
 
   ifstream ifs("member.csv", ios::in);
 
@@ -48,12 +52,12 @@ int main(){
   string tmp_conma;
   string str;
   string v[5];
-  v[0]='0';
-  v[1]='0';
-  v[2]='0';
-  v[3]='0';
-  v[4]='0';
-  v[5]='0';
+  v[0]="0.0";
+  v[1]="0.0";
+  v[2]="0.0";
+  v[3]="0.0";
+  v[4]="0.0";
+  v[5]="0.0";
 
   while(getline(ifs, tmp)){
     istringstream i_stream(tmp);
@@ -122,13 +126,18 @@ string st;
         }
 
       moa = (double)(suma)/nma;
-      string s1;
-      s1 = to_string(nma);
-      string u1;
-      u1 = to_string(suma);
-      string t1;
-      t1 = to_string(moa);
-      string res = a + "," + s1 + "," + u1 + "," + t1;
+      ra = stod(v[3]);
+      int q = 0;
+      if(p1==1) q=30;
+      if(p1==2) q =10;
+      if(p1==3) q =-10;
+      if(p1==4) q= -30;
+      ra = ra + (1-nma*0.002) *q;
+      string s1 = to_string(nma);
+      string u1 = to_string(suma);
+      string t1 = to_string(moa);
+      string t2 = to_string(ra);
+      string res = a + "," + s1 + "," + u1 + "," + t1 + "," + t2;
       result.push_back(res);
     }
 
@@ -139,14 +148,30 @@ string st;
         v[i]=st;
         i++;
       }
-    mob = (double)(sumb)/nmb;
-    string s1;
-    s1 = to_string(nmb);
-    string u1;
-    u1 = to_string(sumb);
-    string t1;
-    t1 = to_string(mob);
-    string res = b + "," + s1 + "," + u1 + "," + t1;
+
+      int q=0;
+      if(p2==1){
+        q=30;
+      }
+      if(p2==2){
+        q=10;
+      }
+      if(p2==3){
+        q=-10;
+      }
+      if(p2==4){
+        q=-30;
+      }
+
+      rb = stod(v[3]);
+      rb = rb + (1-nmb*0.002) * q;
+      mob = (double)(sumb)/nmb;
+
+    string s1 = to_string(nmb);
+    string s2 = to_string(sumb);
+    string s3 = to_string(mob);
+    string s4 = to_string(rb);
+    string res = b + "," + s1 + "," + s2 + "," + s3 + "," + s4;
     result.push_back(res);
   }
 
@@ -158,13 +183,19 @@ string st;
       i++;
     }
 
+  rc = stod(v[3]);
+  int q=0;
+  if(p3==1)q=30;
+  if(p3==2)q=10;
+  if(p3==3)q=-10;
+  if(p3==4)q=-30;
+  rc = rc + (1-0.002*nmc) * q;
   moc = (double)(sumc)/nmc;
-  string s1;
-  s1 = to_string(nmc);
-  string u1;
-  u1 = to_string(sumc);
+  string s1 = to_string(nmc);
+  string u1 = to_string(sumc);
   string t1 = to_string(moc);
-  string res = c + "," + s1 + "," + u1 + "," + t1;
+  string t2 = to_string(rc);
+  string res = c + "," + s1 + "," + u1 + "," + t1 + "," +t2;
   result.push_back(res);
 }
 
@@ -176,13 +207,20 @@ if(tempp_conma == d){
     i++;
   }
 
+rd = stod(v[3]);
+int q=0;
+if(p4==1)q=30;
+if(p4==2)q=10;
+if(p4==3)q=-10;
+if(p4==4)q=-30;
+
+rd = rd + (1-0.002*nmd)*q;
 mod = (double)(sumd)/nmd;
-string s1;
-s1 = to_string(nmd);
-string u1;
-u1 = to_string(sumd);
+string s1 = to_string(nmd);
+string u1 = to_string(sumd);
 string t1 = to_string(mod);
-string res = d + "," + s1 + "," + u1 + "," +t1;
+string t2 = to_string(rd);
+string res = d + "," + s1 + "," + u1 + "," +t1 +"," +t2;
 result.push_back(res);
 }
     }
@@ -209,9 +247,6 @@ result.push_back(res);
         while(getline(ff,str)){
           cout << str << endl;
         }
-
-
-
 
 
 }
